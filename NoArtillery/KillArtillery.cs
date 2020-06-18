@@ -43,11 +43,12 @@ public class KillArtillery : MonoBehaviour
                     }
                 }
             }
-            Destroy(this);
         }
         catch (Exception)
         {
-
+            // We don't care about any errors
         }
+
+        Destroy(gameObject);
     }
 }

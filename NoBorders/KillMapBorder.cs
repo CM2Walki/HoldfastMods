@@ -26,12 +26,12 @@ public class KillMapBorder : MonoBehaviour
                     Destroy(gos[i]);
                 }
             }
-
-            Destroy(this);
         }
         catch (Exception)
         {
-
+            // We don't care about any errors
         }
+
+        Destroy(gameObject);
     }
 }
