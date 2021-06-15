@@ -5,6 +5,7 @@ public class KillArtillery : MonoBehaviour
 {
     private readonly string[] artilleryNames =
     {
+        // Game Map variants
         "Cannon_4Pdr",
         "Cannon_6Pdr",
         "Cannon_18Pdr",
@@ -17,16 +18,34 @@ public class KillArtillery : MonoBehaviour
         "MovableCannon_FieldGun_9PDR",
         "Swivlegun",
         "Rocket_Moveable_Usable",
-        "Rocket_launcher_Gunboat"
+        "Rocket_launcher_Gunboat",
+
+        // Mod Map variants
+        "Movable_FieldGun_9PDR_Destructible",
+        "Movable_RocketLauncher_Destructible",
+        "4Pdr(Wheel Carriage)_Destructible",
+        "4Pdr(Wheel Carriage)_Naval_Destructible",
+        "4Pdr_Gunboat_Naval_Destructible",
+        "6Pdr_Destructible",
+        "9Pdr(Wheel Carriage)_Naval_Destructible",
+        "18Pdr_Naval_Destructible",
+        "24Pdr_Destructible",
+        "24Pdr_Naval_Destructible",
+        "36Pdr_French_Destructible",
+        "36Pdr_French_Naval_Destructible",
+        "FieldGun_9PDR_Destructible",
+        "FieldGun_9PDR_Naval_Destructible",
+        "Longgun_RotatingCannonCarriage_Destructible",
+        "RocketLauncher_Gunboat_Naval_Destructible"
     };
 
     private void Awake()
     {
         try
         {
-            GameObject[] gos = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+            var gos = FindObjectsOfType(typeof(GameObject)) as GameObject[];
 
-            for (int i = 0; i < gos.Length; i++)
+            for (var i = 0; i < gos.Length; i++)
             {
                 var goName = gos[i].name;
                 if (goName.IndexOf("(Clone)", StringComparison.OrdinalIgnoreCase) >= 0) // Prefabs get "(Clone)" appended these were spawned using overrides, so keep them
@@ -34,13 +53,16 @@ public class KillArtillery : MonoBehaviour
                     continue;
                 }
 
-                for (int j = 0; j < artilleryNames.Length; j++)
+                for (var j = 0; j < artilleryNames.Length; j++)
                 {
-                    if (goName.IndexOf(artilleryNames[j], StringComparison.OrdinalIgnoreCase) >= 0) // Kill anything that's in the array, leave noone alive!
+                    if (goName.IndexOf(artilleryNames[j], StringComparison.OrdinalIgnoreCase) < 0)
                     {
-                        Destroy(gos[i]);
-                        break;
+                        continue;
                     }
+
+                    Destroy(gos[i]);
+
+                    break;
                 }
             }
         }
