@@ -1,4 +1,4 @@
-# Walki's Script Mods
+# AGS Script Mods
 Repository holding the sourcecode of all our <soviet logo here> Holdfast script mods:
 
 * **[Walki's Artillery Wiper](https://steamcommunity.com/sharedfiles/filedetails/?id=2134420587)** - [Sourcecode](https://github.com/CM2Walki/HoldfastMods/tree/master/NoArtillery)
