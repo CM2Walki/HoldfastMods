@@ -205,4 +205,12 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     {
 
     }
+
+    public void OnBuffStart(int playerId, BuffType buff)
+    {
+    }
+
+    public void OnBuffStop(int playerId, BuffType buff)
+    {
+    }
 }
