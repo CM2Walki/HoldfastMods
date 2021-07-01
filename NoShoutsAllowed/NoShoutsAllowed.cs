@@ -120,7 +120,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
 
     }
 
-    public void OnDamageableObjectDamaged(GameObject damageableObject, int oldHp, int newHp)
+    public void OnDamageableObjectDamaged(GameObject damageableObject, int damageableObjectId, int shipId, int oldHp, int newHp)
     {
 
     }
@@ -167,7 +167,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     {
     }
 
-    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag)
+    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
     {
     }
 
@@ -211,6 +211,30 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     }
 
     public void OnBuffStop(int playerId, BuffType buff)
+    {
+    }
+
+    public void OnShotInfo(int playerId, int shotCount, Vector3[][] shotsPointsPositions, float[] trajectileDistances, float[] distanceFromFiringPositions, float[] horizontalDeviationAngles, float[] maxHorizontalDeviationAngles, float[] muzzleVelocities, float[] gravities, float[] damageHitBaseDamages, float[] damageRangeUnitValues, float[] damagePostTraitAndBuffValues, float[] totalDamages, Vector3[] hitPositions, Vector3[] hitDirections, int[] hitPlayerIds, int[] hitDamageableObjectIds, int[] hitShipIds, int[] hitVehicleIds)
+    {
+    }
+
+    public void OnVehicleSpawned(int vehicleId, FactionCountry playerFaction, PlayerClass playerClass, GameObject playerObject, int ownerPlayerId)
+    {
+    }
+
+    public void OnVehicleHurt(int vehicleId, byte oldHp, byte newHp, EntityHealthChangedReason reason)
+    {
+    }
+
+    public void OnPlayerKilledVehicle(int killerPlayerId, int victimVehicleId, EntityHealthChangedReason reason, string details)
+    {
+    }
+
+    public void OnShipSpawned(int shipId, GameObject shipObject, FactionCountry shipfaction, ShipType shipType)
+    {
+    }
+
+    public void OnShipDamaged(int shipId, int oldHp, int newHp)
     {
     }
 }

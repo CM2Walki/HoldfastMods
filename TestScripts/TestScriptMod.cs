@@ -33,9 +33,9 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("IsClient {0} {1}", client, steamId);
     }
 
-    public void OnDamageableObjectDamaged(GameObject damageableObject, int oldHp, int newHp)
+    public void OnDamageableObjectDamaged(GameObject damageableObject, int damageableObjectId, int shipId, int oldHp, int newHp)
     {
-        Debug.LogFormat("OnDamageableObjectDamaged {0} {1} {2}", damageableObject.name, oldHp, newHp);
+        Debug.LogFormat("OnDamageableObjectDamaged {0} {1} {2} {3} {4}", damageableObject.name, damageableObjectId, shipId, oldHp, newHp);
     }
 
     public void OnPlayerHurt(int playerId, byte oldHp, byte newHp, EntityHealthChangedReason reason)
@@ -53,9 +53,9 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("OnPlayerShoot {0} {1}", playerId, dryShot);
     }
 
-    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string playerName, string regimentTag)
+    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string playerName, string regimentTag, bool isBot)
     {
-        Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5} {6} {7}", playerId, playerFaction, playerClass, uniformId, playerObject.name, steamId, playerName, regimentTag);
+        Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5} {6} {7} {8}", playerId, playerFaction, playerClass, uniformId, playerObject.name, steamId, playerName, regimentTag, isBot);
     }
 
     public void OnScorableAction(int playerId, byte score, ScorableActionType reason)
@@ -161,5 +161,39 @@ public class TestScriptMod : IHoldfastSharedMethods
     public void OnBuffStop(int playerId, BuffType buff)
     {
         Debug.LogFormat("OnBuffStop {0} {1}", playerId, buff);
+    }
+
+    public void OnShotInfo(int playerId, int shotCount, Vector3[][] shotsPointsPositions, float[] trajectileDistances, float[] distanceFromFiringPositions, float[] horizontalDeviationAngles, float[] maxHorizontalDeviationAngles, float[] muzzleVelocities, float[] gravities, float[] damageHitBaseDamages, float[] damageRangeUnitValues, float[] damagePostTraitAndBuffValues, float[] totalDamages, Vector3[] hitPositions, Vector3[] hitDirections, int[] hitPlayerIds, int[] hitDamageableObjectIds, int[] hitShipIds, int[] hitVehicleIds)
+    {
+        Debug.LogFormat("OnShotInfo Player {0}, Shot Count {1}", playerId, shotCount);
+        for (int i = 0; i < shotCount; i++)
+        {
+            Debug.LogFormat("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} ... ohh yeah and also positions...", trajectileDistances[i], distanceFromFiringPositions[i], horizontalDeviationAngles[i], maxHorizontalDeviationAngles[i], muzzleVelocities[i], gravities[i], damageHitBaseDamages[i], damageRangeUnitValues[i], damagePostTraitAndBuffValues[i], totalDamages[i], hitPositions[i], hitDirections[i], hitPlayerIds[i], hitDamageableObjectIds[i], hitShipIds[i], hitVehicleIds[i]);
+        }
+    }
+
+    public void OnVehicleSpawned(int vehicleId, FactionCountry vehicleFaction, PlayerClass vehicleClass, GameObject vehicleObject, int ownerPlayerId)
+    {
+        Debug.LogFormat("OnVehicleSpawned {0} {1} {2} {3} {4}", vehicleId, vehicleFaction, vehicleClass, vehicleObject.name, ownerPlayerId);
+    }
+
+    public void OnVehicleHurt(int vehicleId, byte oldHp, byte newHp, EntityHealthChangedReason reason)
+    {
+        Debug.LogFormat("OnVehicleHurt {0} {1} {2} {3}", vehicleId, oldHp, newHp, reason);
+    }
+
+    public void OnPlayerKilledVehicle(int killerPlayerId, int victimVehicleId, EntityHealthChangedReason reason, string details)
+    {
+        Debug.LogFormat("OnPlayerKilledVehicle {0} {1} {2} {3}", killerPlayerId, victimVehicleId, reason, details);
+    }
+
+    public void OnShipSpawned(int shipId, GameObject shipObject, FactionCountry shipfaction, ShipType shipType)
+    {
+        Debug.LogFormat("OnShipSpawned {0} {1} {2} {3}", shipId, shipObject.name, shipfaction, shipType);
+    }
+
+    public void OnShipDamaged(int shipId, int oldHp, int newHp)
+    {
+        Debug.LogFormat("OnShipDamaged {0} {1} {2}", shipId, oldHp, newHp);
     }
 }
