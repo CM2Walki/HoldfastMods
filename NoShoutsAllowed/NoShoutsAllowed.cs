@@ -167,7 +167,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     {
     }
 
-    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
+    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
     {
     }
 

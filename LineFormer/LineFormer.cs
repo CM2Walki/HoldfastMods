@@ -10,8 +10,7 @@ public class LineFormer : IHoldfastSharedMethods
         public int requiredToSpawn;
         public int spawnedCount;
         public Vector3 position;
-        public Quaternion faceDirection;
-
+        public float yRotation;
         public Vector3 rightDirection;
     }
 
@@ -49,9 +48,10 @@ public class LineFormer : IHoldfastSharedMethods
         }
 
         f1MenuInputField.onEndEdit.Invoke("carbonPlayers devMode 0");
+        f1MenuInputField.onEndEdit.Invoke("carbonPlayers ignoreAutoControls true");
     }
 
-    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
+    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
     {
         playerFactionDictionary[playerId] = playerFaction;
         playerObjectDictionary[playerId] = playerObject;
@@ -87,7 +87,9 @@ public class LineFormer : IHoldfastSharedMethods
                 }
 
                 playerObject.transform.position = targetPosition;
-                playerObject.transform.rotation = runningCommand.faceDirection;
+                playerObject.transform.eulerAngles = new Vector3(0, runningCommand.yRotation, 0);
+
+                Debug.LogFormat("YRotation set to {0}", playerObject.transform.eulerAngles);
 
                 runningCommand.spawnedCount++;
             }
@@ -112,11 +114,13 @@ public class LineFormer : IHoldfastSharedMethods
                 Vector3 playerPosition;
                 Vector3 playerRight;
                 Vector3 playerForward;
+                float playerYRotation;
                 if (playerFactionDictionary.TryGetValue(playerId, out factionCountry) && playerObjectDictionary.TryGetValue(playerId, out playerObject))
                 {
                     playerPosition = playerObject.transform.position;
                     playerRight = playerObject.transform.right;
                     playerForward = playerObject.transform.forward;
+                    playerYRotation = playerObject.transform.eulerAngles.y;
                 }
                 else if (playerObjectDictionary.Count > 0)
                 {
@@ -129,7 +133,7 @@ public class LineFormer : IHoldfastSharedMethods
                     while (randomIndex > -1 && enumeratorValues.MoveNext())
                     {
                         randomIndex--;
-                        if(randomIndex < 0)
+                        if (randomIndex < 0)
                         {
                             playerTransform = enumeratorValues.Current.transform;
                         }
@@ -139,6 +143,7 @@ public class LineFormer : IHoldfastSharedMethods
                     playerPosition = playerTransform.position;
                     playerRight = playerTransform.right;
                     playerForward = playerTransform.forward;
+                    playerYRotation = playerTransform.eulerAngles.y;
                 }
                 else
                 {
@@ -165,8 +170,11 @@ public class LineFormer : IHoldfastSharedMethods
                     {
                         requiredToSpawn = spawnCounter,
                         position = playerPosition + (playerForward * 0.5f), //the position will be 0.5m infront of the player so the bots dont spawn on the player
-                        rightDirection = playerRight * 0.6f
+                        rightDirection = playerRight * 0.6f,
+                        yRotation = playerYRotation,
                     });
+
+                    Debug.LogFormat("YRotation {0}", playerYRotation);
                 }
             }
         }

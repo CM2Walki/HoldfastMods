@@ -53,9 +53,9 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("OnPlayerShoot {0} {1}", playerId, dryShot);
     }
 
-    public void OnPlayerSpawned(int playerId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string playerName, string regimentTag, bool isBot)
+    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string playerName, string regimentTag, bool isBot)
     {
-        Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5} {6} {7} {8}", playerId, playerFaction, playerClass, uniformId, playerObject.name, steamId, playerName, regimentTag, isBot);
+        Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", playerId, spawnSectionId, playerFaction, playerClass, uniformId, playerObject.name, steamId, playerName, regimentTag, isBot);
     }
 
     public void OnScorableAction(int playerId, byte score, ScorableActionType reason)
