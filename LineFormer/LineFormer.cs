@@ -17,6 +17,7 @@ public class LineFormer : IHoldfastSharedMethods
     private InputField f1MenuInputField;
     private Dictionary<int, FactionCountry> playerFactionDictionary = new Dictionary<int, FactionCountry>();
     private Dictionary<int, GameObject> playerObjectDictionary = new Dictionary<int, GameObject>();
+    private Dictionary<int, bool> playerIsBotDictionary = new Dictionary<int, bool>();
     private List<RunningCommand> runningCommands = new List<RunningCommand>();
     private FactionCountry attackingFaction;
     private FactionCountry defendingFaction;
@@ -51,7 +52,12 @@ public class LineFormer : IHoldfastSharedMethods
         f1MenuInputField.onEndEdit.Invoke("carbonPlayers ignoreAutoControls true");
     }
 
-    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
+    public void OnPlayerJoined(int playerId, ulong steamId, string name, string regimentTag, bool isBot)
+    {
+        playerIsBotDictionary[playerId] = isBot;
+    }
+
+    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject)
     {
         playerFactionDictionary[playerId] = playerFaction;
         playerObjectDictionary[playerId] = playerObject;
@@ -59,7 +65,8 @@ public class LineFormer : IHoldfastSharedMethods
         if (runningCommands.Count > 0)
         {
             var runningCommand = runningCommands[0];
-            if (isBot)
+            bool isBot;
+            if (playerIsBotDictionary.TryGetValue(playerId, out isBot) && isBot)
             {
                 runningCommand.requiredToSpawn--;
                 if (runningCommand.requiredToSpawn == 0)
@@ -180,6 +187,7 @@ public class LineFormer : IHoldfastSharedMethods
         }
     }
 
+    #region Not Used
     public void GetSyncedTime(double time)
     {
     }
@@ -312,4 +320,17 @@ public class LineFormer : IHoldfastSharedMethods
     public void PassConfigVariables(string[] value)
     {
     }
+
+    public void OnRCCommand(int playerId, string text, bool isLoggedIn)
+    {
+    }
+
+    public void OnAdminPlayerAction(int playerId, int adminId, ServerAdminAction action, string reason)
+    {
+    }
+
+    public void OnPlayerLeft(int playerId)
+    {
+    }
+    #endregion
 }

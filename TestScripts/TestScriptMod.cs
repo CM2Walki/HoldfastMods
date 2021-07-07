@@ -53,9 +53,19 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("OnPlayerShoot {0} {1}", playerId, dryShot);
     }
 
-    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string playerName, string regimentTag, bool isBot)
+    public void OnPlayerJoined(int playerId, ulong steamId, string playerName, string regimentTag, bool isBot)
     {
-        Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", playerId, spawnSectionId, playerFaction, playerClass, uniformId, playerObject.name, steamId, playerName, regimentTag, isBot);
+        Debug.LogFormat("OnPlayerJoined {0} {1} {2} {3} {4}", playerId, steamId, playerName, regimentTag, isBot);
+    }
+
+    public void OnPlayerLeft(int playerId)
+    {
+        Debug.LogFormat("OnPlayerLeft {0}", playerId);
+    }
+
+    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject)
+    {
+        Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5}", playerId, spawnSectionId, playerFaction, playerClass, uniformId, playerObject.name);
     }
 
     public void OnScorableAction(int playerId, byte score, ScorableActionType reason)
@@ -195,5 +205,15 @@ public class TestScriptMod : IHoldfastSharedMethods
     public void OnShipDamaged(int shipId, int oldHp, int newHp)
     {
         Debug.LogFormat("OnShipDamaged {0} {1} {2}", shipId, oldHp, newHp);
+    }
+
+    public void OnRCCommand(int playerId, string text, bool isLoggedIn)
+    {
+        Debug.LogFormat("OnRCCommand {0} {1} {2}", playerId, text, isLoggedIn);
+    }
+
+    public void OnAdminPlayerAction(int playerId, int adminId, ServerAdminAction action, string reason)
+    {
+        Debug.LogFormat("OnShipDamaged {0} {1} {2} {3}", playerId, adminId, action.ToString(), reason);
     }
 }

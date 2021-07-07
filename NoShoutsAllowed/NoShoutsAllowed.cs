@@ -80,6 +80,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
         }
     }
 
+    #region Not Used
     public void GetSyncedTime(double time)
     {
 
@@ -167,10 +168,6 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     {
     }
 
-    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject, ulong steamId, string name, string regimentTag, bool isBot)
-    {
-    }
-
     public void OnPlayerStartCarry(int playerId, CarryableObjectType carryableObject)
     {
 
@@ -237,4 +234,25 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     public void OnShipDamaged(int shipId, int oldHp, int newHp)
     {
     }
+
+    public void OnPlayerJoined(int playerId, ulong steamId, string name, string regimentTag, bool isBot)
+    {
+    }
+
+    public void OnPlayerSpawned(int playerId, int spawnSectionId, FactionCountry playerFaction, PlayerClass playerClass, int uniformId, GameObject playerObject)
+    {
+    }
+
+    public void OnRCCommand(int playerId, string text, bool isLoggedIn)
+    {
+    }
+
+    public void OnAdminPlayerAction(int playerId, int adminId, ServerAdminAction action, string reason)
+    {
+    }
+
+    public void OnPlayerLeft(int playerId)
+    {
+    }
+    #endregion
 }
