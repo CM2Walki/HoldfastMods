@@ -3,32 +3,32 @@ using UnityEngine;
 
 public class TestScriptMod : IHoldfastSharedMethods
 {
-    public void GetSyncValue(int value)
+    public void OnSyncValueState(int value)
     {
-        Debug.LogFormat("GetSyncValue {0}", value);
+        Debug.LogFormat("OnSyncValueState {0}", value);
     }
 
-    public void GetSyncedTime(double time)
+    public void OnUpdateSyncedTime(double time)
     {
-        //Debug.LogWarningFormat("GetSyncedTime {0}", time);
+        //Debug.LogWarningFormat("OnUpdateSyncedTime {0}", time);
     }
 
-    public void GetTimeSinceStart(float time)
+    public void OnUpdateElapsedTime(float time)
     {
-        //Debug.LogWarningFormat("GetTimeSinceStart {0}", time);
+        //Debug.LogWarningFormat("OnUpdateElapsedTime {0}", time);
     }
 
-    public void GetTimeRemaining(float time)
+    public void OnUpdateTimeRemaining(float time)
     {
         //Debug.LogWarningFormat("GetTimeRemaining {0}", time);
     }
 
-    public void IsServer(bool server)
+    public void OnIsServer(bool server)
     {
         Debug.LogFormat("IsServer {0}", server);
     }
 
-    public void IsClient(bool client, ulong steamId)
+    public void OnIsClient(bool client, ulong steamId)
     {
         Debug.LogFormat("IsClient {0} {1}", client, steamId);
     }
@@ -68,7 +68,7 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("OnPlayerSpawned {0} {1} {2} {3} {4} {5}", playerId, spawnSectionId, playerFaction, playerClass, uniformId, playerObject.name);
     }
 
-    public void OnScorableAction(int playerId, byte score, ScorableActionType reason)
+    public void OnScorableAction(int playerId, int score, ScorableActionType reason)
     {
         Debug.LogFormat("OnScorableAction {0} {1} {2}", playerId, score, reason.ToString());
     }
@@ -197,9 +197,9 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("OnPlayerKilledVehicle {0} {1} {2} {3}", killerPlayerId, victimVehicleId, reason, details);
     }
 
-    public void OnShipSpawned(int shipId, GameObject shipObject, FactionCountry shipfaction, ShipType shipType)
+    public void OnShipSpawned(int shipId, GameObject shipObject, FactionCountry shipfaction, ShipType shipType, int shipNameId)
     {
-        Debug.LogFormat("OnShipSpawned {0} {1} {2} {3}", shipId, shipObject.name, shipfaction, shipType);
+        Debug.LogFormat("OnShipSpawned {0} {1} {2} {3}, {4}", shipId, shipObject.name, shipfaction, shipType, shipNameId);
     }
 
     public void OnShipDamaged(int shipId, int oldHp, int newHp)
@@ -207,13 +207,24 @@ public class TestScriptMod : IHoldfastSharedMethods
         Debug.LogFormat("OnShipDamaged {0} {1} {2}", shipId, oldHp, newHp);
     }
 
-    public void OnRCCommand(int playerId, string text, bool isLoggedIn)
-    {
-        Debug.LogFormat("OnRCCommand {0} {1} {2}", playerId, text, isLoggedIn);
-    }
-
     public void OnAdminPlayerAction(int playerId, int adminId, ServerAdminAction action, string reason)
     {
         Debug.LogFormat("OnShipDamaged {0} {1} {2} {3}", playerId, adminId, action.ToString(), reason);
+    }
+
+    public void OnConsoleCommand(string input, string output, bool success)
+    {
+        Debug.LogFormat("OnConsoleCommand {0} {1} {2}", input, output, success);
+    }
+
+    public void OnRCLogin(int playerId, string inputPassword, bool isLoggedIn)
+    {
+        Debug.LogFormat("OnRCLogin {0} {1} {2}", playerId, inputPassword, isLoggedIn);
+    }
+
+    public void OnRCCommand(int playerId, string input, string output, bool success)
+    {
+        Debug.LogFormat("OnRCCommand {0} {1} {2} {3}", playerId, input, output, success);
+
     }
 }

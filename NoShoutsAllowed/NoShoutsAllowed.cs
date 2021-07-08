@@ -10,7 +10,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     private int damage = 10;
     private string reason = "Oi shush mate!";
 
-    public void IsServer(bool server)
+    public void OnIsServer(bool server)
     {
         //Get all the canvas items in the game
         var canvases = Resources.FindObjectsOfTypeAll<Canvas>();
@@ -81,27 +81,27 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     }
 
     #region Not Used
-    public void GetSyncedTime(double time)
+    public void OnUpdateSyncedTime(double time)
     {
 
     }
 
-    public void GetSyncValue(int value)
+    public void OnSyncValueState(int value)
     {
 
     }
 
-    public void GetTimeRemaining(float time)
+    public void OnUpdateElapsedTime(float time)
     {
 
     }
 
-    public void GetTimeSinceStart(float time)
+    public void OnUpdateTimeRemaining(float time)
     {
 
     }
 
-    public void IsClient(bool client, ulong steamId)
+    public void OnIsClient(bool client, ulong steamId)
     {
 
     }
@@ -193,7 +193,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
 
     }
 
-    public void OnScorableAction(int playerId, byte score, ScorableActionType reason)
+    public void OnScorableAction(int playerId, int score, ScorableActionType reason)
     {
 
     }
@@ -227,7 +227,7 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     {
     }
 
-    public void OnShipSpawned(int shipId, GameObject shipObject, FactionCountry shipfaction, ShipType shipType)
+    public void OnShipSpawned(int shipId, GameObject shipObject, FactionCountry shipfaction, ShipType shipType, int shipNameId)
     {
     }
 
@@ -243,15 +243,23 @@ public class NoShoutsAllowed : IHoldfastSharedMethods
     {
     }
 
-    public void OnRCCommand(int playerId, string text, bool isLoggedIn)
-    {
-    }
-
     public void OnAdminPlayerAction(int playerId, int adminId, ServerAdminAction action, string reason)
     {
     }
 
     public void OnPlayerLeft(int playerId)
+    {
+    }
+
+    public void OnConsoleCommand(string input, string output, bool success)
+    {
+    }
+
+    public void OnRCLogin(int playerId, string inputPassword, bool isLoggedIn)
+    {
+    }
+
+    public void OnRCCommand(int playerId, string input, string output, bool success)
     {
     }
     #endregion
