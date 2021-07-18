@@ -14,16 +14,45 @@ public class LineFormer : IHoldfastSharedMethods
         public Vector3 rightDirection;
     }
 
+    private class ForceFacingDirection
+    {
+        public Transform playerTransform;
+        public Vector3 facingDirection;
+        public double stopRotatingTime;
+    }
+
     private InputField f1MenuInputField;
-    private Dictionary<int, FactionCountry> playerFactionDictionary = new Dictionary<int, FactionCountry>();
-    private Dictionary<int, GameObject> playerObjectDictionary = new Dictionary<int, GameObject>();
-    private Dictionary<int, bool> playerIsBotDictionary = new Dictionary<int, bool>();
-    private List<RunningCommand> runningCommands = new List<RunningCommand>();
+    private readonly Dictionary<int, FactionCountry> playerFactionDictionary = new Dictionary<int, FactionCountry>();
+    private readonly Dictionary<int, GameObject> playerObjectDictionary = new Dictionary<int, GameObject>();
+    private readonly Dictionary<int, bool> playerIsBotDictionary = new Dictionary<int, bool>();
+    private readonly List<RunningCommand> runningCommands = new List<RunningCommand>();
+    private readonly List<ForceFacingDirection> faceDirections = new List<ForceFacingDirection>();
     private FactionCountry attackingFaction;
     private FactionCountry defendingFaction;
+    private double currentTime;
 
     //I only care up to 3 hits max.
-    private RaycastHit[] resultHits = new RaycastHit[3];
+    private readonly RaycastHit[] resultHits = new RaycastHit[3];
+
+    public void OnUpdateSyncedTime(double time)
+    {
+        currentTime = time;
+
+        for (int i = faceDirections.Count - 1; i >= 0; i--)
+        {
+            var currentPlayerRequested = faceDirections[i];
+            if (currentTime <= currentPlayerRequested.stopRotatingTime)
+            {
+                currentPlayerRequested.playerTransform.eulerAngles = currentPlayerRequested.facingDirection;
+                Debug.Log("Setting rotation");
+            }
+            else
+            {
+                faceDirections.RemoveAt(i);
+                Debug.Log("Removing at i");
+            }
+        }
+    }
 
     public void OnIsServer(bool server)
     {
@@ -99,6 +128,13 @@ public class LineFormer : IHoldfastSharedMethods
                 Debug.LogFormat("YRotation set to {0}", playerObject.transform.eulerAngles);
 
                 runningCommand.spawnedCount++;
+
+                faceDirections.Add(new ForceFacingDirection()
+                {
+                    playerTransform = playerObject.transform,
+                    facingDirection = new Vector3(0, runningCommand.yRotation, 0),
+                    stopRotatingTime = currentTime + 5
+                });
             }
         }
     }
@@ -188,7 +224,7 @@ public class LineFormer : IHoldfastSharedMethods
     }
 
     #region Not Used
-    public void OnUpdateSyncedTime(double time)
+    public void OnUpdateElapsedTime(float time)
     {
     }
 
@@ -197,10 +233,6 @@ public class LineFormer : IHoldfastSharedMethods
     }
 
     public void OnUpdateTimeRemaining(float time)
-    {
-    }
-
-    public void OnUpdateElapsedTime(float time)
     {
     }
 
